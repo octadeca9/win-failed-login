@@ -1,0 +1,18 @@
+# Keep the participant image minimal and free of the answer key.
+config/ground_truth.yaml
+
+.git
+.gitignore
+.env
+.env.*
+docker-compose*.yml
+tests/
+scripts/
+docs/
+*.md
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/

@@ -1,0 +1,273 @@
+{
+  "challenge_slug": "windows-failed-login-investigation",
+  "dataset_version": "1.0.0",
+  "notice": "Synthetic Windows Security Event Log generated for SOC training. Not real telemetry. IP addresses use RFC 5737 documentation ranges.",
+  "generated_at": "2026-10-09T00:00:00Z",
+  "timezone": "UTC",
+  "events": [
+    {
+      "record_id": 1001,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T01:00:12Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "administrator",
+      "source_ip": "-",
+      "logon_type": 2,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1002,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T01:05:30Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "-",
+      "logon_type": 2,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1003,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T01:10:00Z",
+      "computer": "WS-FIN-07",
+      "target_user": "mwilson",
+      "source_ip": "198.51.100.10",
+      "logon_type": 3,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1004,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T01:15:00Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "svc-backup",
+      "source_ip": "-",
+      "logon_type": 5,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1005,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T01:20:00Z",
+      "computer": "WS-FIN-07",
+      "target_user": "mwilson",
+      "source_ip": "203.0.113.9",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1006,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T01:22:00Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "administrator",
+      "source_ip": "203.0.113.9",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1007,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T01:30:45Z",
+      "computer": "WS-FIN-07",
+      "target_user": "mwilson",
+      "source_ip": "198.51.100.10",
+      "logon_type": 3,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1008,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:14:05Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1009,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:14:22Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1010,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:14:40Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1011,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:15:01Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1012,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:15:19Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1013,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:15:38Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1014,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:16:00Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1015,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:16:21Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1016,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:16:45Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1017,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:17:02Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1018,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:17:21Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1019,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T02:17:40Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1020,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T02:18:10Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "jsmith",
+      "source_ip": "198.51.100.42",
+      "logon_type": 3,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1021,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T03:00:11Z",
+      "computer": "WS-HR-03",
+      "target_user": "rgarcia",
+      "source_ip": "198.51.100.77",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1022,
+      "event_id": 4625,
+      "timestamp": "2026-10-09T03:01:48Z",
+      "computer": "WS-HR-03",
+      "target_user": "rgarcia",
+      "source_ip": "198.51.100.77",
+      "logon_type": 3,
+      "status": "0xC000006D",
+      "sub_status": "0xC000006A"
+    },
+    {
+      "record_id": 1023,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T03:02:30Z",
+      "computer": "WS-HR-03",
+      "target_user": "rgarcia",
+      "source_ip": "198.51.100.77",
+      "logon_type": 3,
+      "status": "0x0",
+      "sub_status": "0x0"
+    },
+    {
+      "record_id": 1024,
+      "event_id": 4624,
+      "timestamp": "2026-10-09T08:12:03Z",
+      "computer": "WS-ACCT-01",
+      "target_user": "administrator",
+      "source_ip": "-",
+      "logon_type": 2,
+      "status": "0x0",
+      "sub_status": "0x0"
+    }
+  ]
+}

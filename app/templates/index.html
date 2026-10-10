@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ challenge.title }}</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">RL</span>
+      <div>
+        <h1>{{ challenge.title }}</h1>
+        <p class="sub">SOC Analyst Lab &middot; {{ challenge.difficulty|capitalize }} &middot; ~{{ challenge.estimated_minutes }} min</p>
+      </div>
+    </div>
+    <div class="scorebox">
+      <div class="metric"><span id="progress">0/8</span><label>Tasks</label></div>
+      <div class="metric"><span id="score">0/16</span><label>Score</label></div>
+      <button id="reset-btn" class="btn ghost" title="Reset progress">Reset</button>
+    </div>
+  </header>
+
+  <section class="brief">
+    <p>{{ narrative }}</p>
+  </section>
+
+  <main class="layout">
+    <!-- Log viewer -->
+    <section class="panel viewer" aria-label="Security event log viewer">
+      <div class="panel-head">
+        <h2>Windows Security Event Log</h2>
+        <span class="muted" id="event-count"></span>
+      </div>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search user, IP, computer, status…" aria-label="Search events" />
+        <select id="filter-eventid" aria-label="Filter by Event ID">
+          <option value="">All Event IDs</option>
+          <option value="4625">4625 (failed)</option>
+          <option value="4624">4624 (success)</option>
+        </select>
+        <select id="filter-user" aria-label="Filter by account"><option value="">All accounts</option></select>
+        <select id="filter-ip" aria-label="Filter by source IP"><option value="">All source IPs</option></select>
+      </div>
+      <div class="table-wrap">
+        <table id="events">
+          <thead>
+            <tr>
+              <th data-sort="record_id">#</th>
+              <th data-sort="timestamp">Timestamp (UTC)</th>
+              <th data-sort="event_id">Event ID</th>
+              <th data-sort="target_user">Account</th>
+              <th data-sort="source_ip">Source IP</th>
+              <th data-sort="logon_type">Logon</th>
+              <th data-sort="status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="events-body"></tbody>
+        </table>
+      </div>
+      <p class="notice" id="dataset-notice"></p>
+    </section>
+
+    <!-- Task panel -->
+    <section class="panel tasks" aria-label="Investigation tasks">
+      <div class="panel-head"><h2>Tasks</h2></div>
+      <div id="task-list"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

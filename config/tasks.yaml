@@ -1,0 +1,111 @@
+# Public task definitions. NO answer keys here — ground truth lives in
+# config/ground_truth.yaml (server-side) and is never returned to the browser.
+
+tasks:
+  - id: T1
+    section_id: section-1
+    title: Identify Failed Logon Events
+    points: 2
+    validator_type: exact_match
+    sort_order: 1
+    instructions: >
+      Which Windows Security Event ID represents a failed logon attempt?
+      Enter the numeric Event ID.
+    answer_hint: "e.g. 4624"
+    input: text
+
+  - id: T2
+    section_id: section-1
+    title: Find the Target Account
+    points: 2
+    validator_type: normalized_string
+    sort_order: 2
+    instructions: >
+      Which user account received the highest number of failed logon (Event ID
+      4625) attempts? Enter the account name exactly as it appears in the
+      target_user field.
+    answer_hint: "account name"
+    input: text
+
+  - id: T3
+    section_id: section-1
+    title: Identify the Source IP
+    points: 2
+    validator_type: ip_match
+    sort_order: 3
+    instructions: >
+      From which source IP address did the highest number of failed logon
+      attempts against the target account originate? Enter the IPv4 address.
+    answer_hint: "e.g. 198.51.100.x"
+    input: text
+
+  - id: T4
+    section_id: section-1
+    title: Count Failed Attempts
+    points: 2
+    validator_type: integer_match
+    sort_order: 4
+    instructions: >
+      How many failed logon events (Event ID 4625) were recorded for the target
+      account you found in T2 coming from the source IP you found in T3? Count
+      only 4625 events matching both that account and that source IP. Enter an
+      integer.
+    answer_hint: "whole number"
+    input: text
+
+  - id: T5
+    section_id: section-1
+    title: Find the Attempt Window
+    points: 2
+    validator_type: timestamp_window
+    sort_order: 5
+    instructions: >
+      What are the timestamps of the FIRST and LAST failed logon in the
+      suspicious burst (the target account and source IP from T2/T3)? Use ISO
+      8601 UTC, e.g. 2026-10-09T12:30:00Z.
+    answer_hint: "first and last timestamp (ISO 8601 UTC)"
+    input: timestamp_window
+
+  - id: T6
+    section_id: section-1
+    title: Check for a Successful Logon
+    points: 2
+    validator_type: structured_choice
+    sort_order: 6
+    instructions: >
+      After the burst of failures, is there a related SUCCESSFUL logon (Event ID
+      4624) for the same account from the same source IP? Choose yes / no /
+      insufficient_evidence and provide the Event ID or record_id as evidence.
+    choices: ["yes", "no", "insufficient_evidence"]
+    require_evidence: true
+    evidence_hint: "Event ID or record_id"
+    input: choice_with_evidence
+
+  - id: T7
+    section_id: section-1
+    title: Submit the SOC Triage Verdict
+    points: 2
+    validator_type: structured_choice
+    sort_order: 7
+    instructions: >
+      Based on the evidence (repeated failures followed by a success from the
+      same IP), choose your triage verdict and its priority. Verdict:
+      monitor / investigate / escalate. Priority: low / medium / high.
+    choices: ["monitor", "investigate", "escalate"]
+    priorities: ["low", "medium", "high"]
+    require_priority: true
+    input: choice_with_priority
+
+  - id: T8
+    section_id: section-1
+    title: Analyze the Logon Type
+    points: 2
+    validator_type: integer_match
+    sort_order: 8
+    instructions: >
+      Inspect the Logon column for the suspicious burst (the account and source
+      IP from T2/T3). The failed attempts all share one Windows logon type —
+      the value that indicates a remote network logon. Which logon_type number
+      was used? Enter the integer.
+    answer_hint: "logon_type number"
+    input: text

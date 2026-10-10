@@ -1,0 +1,30 @@
+slug: windows-failed-login-investigation
+title: Windows Failed Login Investigation
+difficulty: easy
+estimated_minutes: 15
+challenge_version: "1.0.0"
+dataset_version: "1.0.0"
+max_score: 16
+session_ttl_minutes: 45
+published: true
+
+narrative: >
+  Anda bertugas sebagai SOC Analyst L1. Tim monitoring menerima indikasi
+  peningkatan kegagalan autentikasi pada sebuah Windows host. Analisis dataset
+  Windows Security Event Log yang tersedia, identifikasi pola yang relevan, dan
+  tentukan tindakan triage berdasarkan bukti. Dataset ini merupakan simulasi
+  untuk latihan.
+
+sections:
+  - id: section-1
+    title: Windows Authentication Log Investigation
+    sort_order: 1
+    tasks:
+      - T1
+      - T2
+      - T3
+      - T4
+      - T5
+      - T6
+      - T7
+      - T8
