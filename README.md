@@ -4,7 +4,7 @@ SOC Analyst (Easy) challenge for **hack.redlimit.id**. Participants analyse a
 synthetic Windows Security Event Log (Event IDs `4625` / `4624`), identify a
 suspicious authentication pattern, and submit a triage verdict.
 
-- **1 section · 8 tasks · 16 points · ~15–20 min**
+- **1 section · 8 tasks · 500 points (difficulty-weighted) · ~15–20 min**
 - No Windows VM, no RDP, no full SIEM. Offline JSON dataset + web log viewer.
 - Server-side validation; ground truth never reaches the browser or the
   participant image.
@@ -40,16 +40,20 @@ python scripts/validate-dataset.py   # dataset vs ground-truth consistency
 
 ## The 8 tasks
 
-| ID | Title | Validator |
-|----|-------|-----------|
-| T1 | Identify Failed Logon Events | exact_match (Event ID) |
-| T2 | Find the Target Account | normalized_string |
-| T3 | Identify the Source IP | ip_match (canonical) |
-| T4 | Count Failed Attempts | integer_match |
-| T5 | Find the Attempt Window | timestamp_window (ISO 8601 UTC) |
-| T6 | Check for a Successful Logon | structured_choice + evidence |
-| T7 | Submit the SOC Triage Verdict | structured_choice + priority |
-| T8 | Analyze the Logon Type | integer_match (logon_type) |
+| ID | Title | Validator | Points |
+|----|-------|-----------|-------:|
+| T1 | Identify Failed Logon Events | exact_match (Event ID) | 20 |
+| T2 | Find the Target Account | normalized_string | 45 |
+| T3 | Identify the Source IP | ip_match (canonical) | 45 |
+| T4 | Count Failed Attempts | integer_match | 60 |
+| T5 | Find the Attempt Window | timestamp_window (ISO 8601 UTC) | 70 |
+| T6 | Check for a Successful Logon | structured_choice + evidence | 90 |
+| T7 | Submit the SOC Triage Verdict | structured_choice + priority | 140 |
+| T8 | Analyze the Logon Type | integer_match (logon_type) | 30 |
+| | | **Total** | **500** |
+
+Points are difficulty-weighted (tens → hundreds). Scoring is server-side; the
+weights live in `config/tasks.yaml` and the total is derived, not hard-coded.
 
 ## Architecture (dev baseline)
 

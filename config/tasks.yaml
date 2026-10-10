@@ -5,7 +5,7 @@ tasks:
   - id: T1
     section_id: section-1
     title: Identify Failed Logon Events
-    points: 2
+    points: 20
     validator_type: exact_match
     sort_order: 1
     instructions: >
@@ -17,7 +17,7 @@ tasks:
   - id: T2
     section_id: section-1
     title: Find the Target Account
-    points: 2
+    points: 45
     validator_type: normalized_string
     sort_order: 2
     instructions: >
@@ -30,7 +30,7 @@ tasks:
   - id: T3
     section_id: section-1
     title: Identify the Source IP
-    points: 2
+    points: 45
     validator_type: ip_match
     sort_order: 3
     instructions: >
@@ -42,7 +42,7 @@ tasks:
   - id: T4
     section_id: section-1
     title: Count Failed Attempts
-    points: 2
+    points: 60
     validator_type: integer_match
     sort_order: 4
     instructions: >
@@ -56,7 +56,7 @@ tasks:
   - id: T5
     section_id: section-1
     title: Find the Attempt Window
-    points: 2
+    points: 70
     validator_type: timestamp_window
     sort_order: 5
     instructions: >
@@ -69,7 +69,7 @@ tasks:
   - id: T6
     section_id: section-1
     title: Check for a Successful Logon
-    points: 2
+    points: 90
     validator_type: structured_choice
     sort_order: 6
     instructions: >
@@ -84,7 +84,7 @@ tasks:
   - id: T7
     section_id: section-1
     title: Submit the SOC Triage Verdict
-    points: 2
+    points: 140
     validator_type: structured_choice
     sort_order: 7
     instructions: >
@@ -99,7 +99,7 @@ tasks:
   - id: T8
     section_id: section-1
     title: Analyze the Logon Type
-    points: 2
+    points: 30
     validator_type: integer_match
     sort_order: 8
     instructions: >

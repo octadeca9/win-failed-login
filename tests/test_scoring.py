@@ -50,7 +50,8 @@ def test_full_solve_reaches_14():
         assert r.status_code == 200, r.text
         last = r.json()
         assert last["correct"] is True
-    assert last["score"] == 16
+    assert last["score"] == 500
+    assert last["max_score"] == 500
     assert last["progress"] == {"completed": 8, "total": 8}
     assert last["status"] == "completed"
 
@@ -61,7 +62,7 @@ def test_duplicate_correct_does_not_double_score():
     client.post("/api/tasks/T1/submit", json={"answer": "4625"}, headers=h)
     r = client.post("/api/tasks/T1/submit", json={"answer": "4625"}, headers=h)
     body = r.json()
-    assert body["score"] == 2  # only T1 counted once
+    assert body["score"] == 20  # only T1 (20 pts) counted once
     assert body["progress"]["completed"] == 1
 
 
@@ -101,5 +102,5 @@ def test_sessions_are_isolated():
     client.post("/api/session/reset", headers=a)
     client.post("/api/session/reset", headers=b)
     client.post("/api/tasks/T1/submit", json={"answer": "4625"}, headers=a)
-    assert client.get("/api/session", headers=a).json()["score"] == 2
+    assert client.get("/api/session", headers=a).json()["score"] == 20
     assert client.get("/api/session", headers=b).json()["score"] == 0

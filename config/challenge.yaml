@@ -4,7 +4,7 @@ difficulty: easy
 estimated_minutes: 15
 challenge_version: "1.0.0"
 dataset_version: "1.0.0"
-max_score: 16
+max_score: 500
 session_ttl_minutes: 45
 published: true
 
