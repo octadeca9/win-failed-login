@@ -19,6 +19,18 @@ def test_health():
     assert client.get("/health").json() == {"status": "ok"}
 
 
+def test_readyz_reports_ground_truth_loaded():
+    r = client.get("/readyz")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ready"] is True
+    assert body["ground_truth_loaded"] is True
+    assert body["task_count"] == 8
+    # diagnostics must never leak the answer key
+    assert "jsmith" not in r.text.lower()
+    assert "4625" not in r.text
+
+
 def test_meta_has_no_answers():
     body = client.get("/api/meta").text.lower()
     assert "jsmith" not in body

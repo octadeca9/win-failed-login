@@ -20,6 +20,7 @@ from app.services.loaders import (
     GroundTruthNotConfigured,
     load_challenge,
     load_dataset,
+    load_ground_truth,
     public_tasks,
 )
 from app.services.session import store
@@ -58,6 +59,39 @@ def _session_id(request: Request) -> str:
 @app.get("/health")
 def health() -> JSONResponse:
     return JSONResponse({"status": "ok"})
+
+
+@app.get("/readyz")
+def readyz() -> JSONResponse:
+    """Readiness + config diagnostics. Reports whether the validator can load
+    the ground truth, and which sources the process actually sees at startup.
+    Returns booleans and counts only — never any answer content.
+    """
+    sources_present = {
+        "GROUND_TRUTH_B64": bool(config.GROUND_TRUTH_B64),
+        "GROUND_TRUTH_YAML": bool(config.GROUND_TRUTH_YAML),
+        "GROUND_TRUTH_PATH": str(config.GROUND_TRUTH_PATH),
+        "GROUND_TRUTH_PATH_exists": config.GROUND_TRUTH_PATH.exists(),
+    }
+    try:
+        gt = load_ground_truth()
+        body = {
+            "ready": True,
+            "ground_truth_loaded": True,
+            "task_count": len(gt.get("tasks", {})),
+            "sources_present": sources_present,
+        }
+        return JSONResponse(body)
+    except GroundTruthNotConfigured as exc:
+        return JSONResponse(
+            {
+                "ready": False,
+                "ground_truth_loaded": False,
+                "reason": str(exc),
+                "sources_present": sources_present,
+            },
+            status_code=503,
+        )
 
 
 @app.get("/", response_class=HTMLResponse)
