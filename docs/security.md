@@ -11,7 +11,7 @@ Scoring and the answer key live on the trusted side.
 |-------|----------|---------------------------|
 | Dataset (`windows_security_events.json`) | participant image | yes (by design — no answers) |
 | Public task definitions (`tasks.yaml`) | participant image | yes (no answers) |
-| Ground truth (`ground_truth.yaml`) | trusted validator / read-only mount | **no** |
+| Ground truth (`ground_truth.yaml`) | trusted validator / read-only mount / runtime env var (`GROUND_TRUTH_B64`\|`GROUND_TRUTH_YAML`) | **no** |
 | Score / progress | server-side session store | read-only via API |
 
 - The image build **excludes** `config/ground_truth.yaml` (`.dockerignore`),

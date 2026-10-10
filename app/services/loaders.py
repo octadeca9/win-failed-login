@@ -1,4 +1,6 @@
-"""Load dataset and challenge/task/ground-truth configuration from disk."""
+"""Load dataset and challenge/task/ground-truth configuration."""
+import base64
+import binascii
 import json
 from functools import lru_cache
 from pathlib import Path
@@ -29,10 +31,38 @@ def load_tasks() -> list[dict]:
     return _read_yaml(config.TASKS_CONFIG_PATH).get("tasks", [])
 
 
+class GroundTruthNotConfigured(RuntimeError):
+    """Raised when no ground-truth source is available."""
+
+
 @lru_cache(maxsize=1)
 def load_ground_truth() -> dict:
-    """Server-side only. Never serialize this into any HTTP response."""
-    return _read_yaml(config.GROUND_TRUTH_PATH)
+    """Server-side only. Never serialize this into any HTTP response.
+
+    Resolved in order: GROUND_TRUTH_B64 -> GROUND_TRUTH_YAML -> file at
+    GROUND_TRUTH_PATH. This lets env-only platforms (e.g. ngelinx) inject the
+    answer key at runtime without baking it into the image.
+    """
+    if config.GROUND_TRUTH_B64:
+        try:
+            raw = base64.b64decode(config.GROUND_TRUTH_B64, validate=True).decode("utf-8")
+        except (binascii.Error, ValueError) as exc:
+            raise GroundTruthNotConfigured(
+                "GROUND_TRUTH_B64 is set but is not valid base64"
+            ) from exc
+        return yaml.safe_load(raw)
+
+    if config.GROUND_TRUTH_YAML:
+        return yaml.safe_load(config.GROUND_TRUTH_YAML)
+
+    if config.GROUND_TRUTH_PATH.exists():
+        return _read_yaml(config.GROUND_TRUTH_PATH)
+
+    raise GroundTruthNotConfigured(
+        "No ground truth configured. Set GROUND_TRUTH_B64 (recommended for "
+        "env-only platforms) or GROUND_TRUTH_YAML, or mount a file at "
+        f"{config.GROUND_TRUTH_PATH} and set GROUND_TRUTH_PATH."
+    )
 
 
 def public_tasks() -> list[dict]:

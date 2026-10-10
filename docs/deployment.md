@@ -26,6 +26,26 @@ docker run --rm redlimit/windows-failed-login:1.0.0 \
   sh -c 'ls config/ground_truth.yaml 2>/dev/null && echo LEAK || echo clean'
 ```
 
+## Supplying the ground truth (answer key)
+
+The validator needs the answer key at runtime, and it must never be baked into
+the image. The source is resolved in this order:
+
+1. **`GROUND_TRUTH_B64`** — base64 of `config/ground_truth.yaml`. Recommended
+   for env-only platforms (e.g. **ngelinx**) that expose key/value variables but
+   no file mounts. Generate the value with:
+   ```bash
+   base64 < config/ground_truth.yaml | tr -d '\n'
+   ```
+   Then set it as a single environment variable on the platform.
+2. **`GROUND_TRUTH_YAML`** — the raw YAML content as the variable value.
+3. **`GROUND_TRUTH_PATH`** — a file path (used by `docker-compose.yml`, which
+   mounts the file read-only at `/run/secrets/ground_truth.yaml`).
+
+If none is provided, task submission returns **HTTP 503** ("validator not
+configured") and logs `ground_truth_not_configured` — this is the symptom when
+neither a mount nor an env var is set (the image has no key by design).
+
 ## Runtime (Docker Spawn)
 
 Docker Compose is a dev tool only. In production a spawner creates one container

@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 from app import config
 from app.services import validator
 from app.services.loaders import (
+    GroundTruthNotConfigured,
     load_challenge,
     load_dataset,
     public_tasks,
@@ -120,15 +121,20 @@ def submit(task_id: str, body: SubmitRequest, request: Request) -> dict:
     if task_id not in public_ids:
         raise HTTPException(status_code=404, detail="unknown task")
 
-    # Enforce attempt limits before spending a validation.
-    used = store.attempts_used(sid, task_id)
-    limit = validator.max_attempts(task_id)
-    if used >= limit:
-        logger.info('attempts_exceeded session=%s task=%s', sid, task_id)
-        raise HTTPException(status_code=429, detail="attempt limit reached for this task")
-
     try:
+        # Enforce attempt limits before spending a validation.
+        used = store.attempts_used(sid, task_id)
+        limit = validator.max_attempts(task_id)
+        if used >= limit:
+            logger.info('attempts_exceeded session=%s task=%s', sid, task_id)
+            raise HTTPException(status_code=429, detail="attempt limit reached for this task")
+
         result = validator.validate(task_id, body.answer)
+    except GroundTruthNotConfigured as exc:
+        # Misconfiguration, not a participant error. Surface clearly, don't
+        # consume an attempt, and log for the operator.
+        logger.error('ground_truth_not_configured: %s', exc)
+        raise HTTPException(status_code=503, detail="validator not configured; contact the lab operator")
     except validator.ValidationError as exc:
         # Malformed answer does not consume... actually record it as an attempt
         # to prevent unbounded probing, but never leak the expected value.

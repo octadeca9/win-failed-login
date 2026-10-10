@@ -21,9 +21,17 @@
   - T5 needs `{"first","last"}` ISO 8601 with a timezone (`...Z`).
   - T6/T7 need `{"choice", ...}` with a value from the allowed options.
 
-### Validator can't find ground truth (`FileNotFoundError`)
-- In compose, ground truth is mounted at `/run/secrets/ground_truth.yaml`
-  (`GROUND_TRUTH_PATH`). Confirm `config/ground_truth.yaml` exists on the host.
+### `FileNotFoundError: /app/config/ground_truth.yaml` on submit (HTTP 503)
+- The answer key is intentionally NOT in the image. You must supply it at
+  runtime. On platforms with env variables only (e.g. **ngelinx**), set
+  `GROUND_TRUTH_B64` to the base64 of `config/ground_truth.yaml`:
+  ```bash
+  base64 < config/ground_truth.yaml | tr -d '\n'
+  ```
+- Alternatives: `GROUND_TRUTH_YAML` (raw YAML as the value), or mount a file and
+  set `GROUND_TRUTH_PATH` (what `docker-compose.yml` does).
+- Newer builds return a clear **503 "validator not configured"** instead of a
+  raw stack trace, and log `ground_truth_not_configured`.
 - Running tests locally uses the default `config/ground_truth.yaml` path.
 
 ### Score didn't increase after a correct answer
