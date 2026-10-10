@@ -5,3 +5,7 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+
+# Internal planning docs — not shipped to the repo
+PRD_Windows_Failed_Login_SOC_RedLimit.md
+Blueprint_Windows_Failed_Login_SOC_RedLimit.md
