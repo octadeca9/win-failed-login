@@ -7,6 +7,19 @@ CHALLENGE_SLUG = os.getenv("CHALLENGE_SLUG", "windows-failed-login-investigation
 PORT = int(os.getenv("PORT", "8080"))
 SESSION_ID = os.getenv("SESSION_ID", "local-dev-session")
 
+
+def _as_bool(value: str, default: bool) -> bool:
+    if value is None:
+        return default
+    return value.strip().lower() in ("1", "true", "yes", "on")
+
+
+# When False, the app serves ONLY the Windows Security Event Log dashboard:
+# no task panel, no score/progress, no submission/session endpoints, and the
+# validator/ground-truth is never loaded (so GROUND_TRUTH_* is not needed).
+# Use this when answers/scoring are handled by an external SOC platform.
+TASKS_ENABLED = _as_bool(os.getenv("TASKS_ENABLED"), default=True)
+
 _BASE = Path(__file__).resolve().parent.parent
 
 DATASET_PATH = Path(os.getenv("DATASET_PATH", _BASE / "dataset" / "windows_security_events.json"))

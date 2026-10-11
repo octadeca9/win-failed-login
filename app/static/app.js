@@ -205,7 +205,9 @@ async function refreshSession() {
 }
 
 function wireReset() {
-  document.getElementById("reset-btn").addEventListener("click", async () => {
+  const btn = document.getElementById("reset-btn");
+  if (!btn) return; // viewer-only mode has no reset button
+  btn.addEventListener("click", async () => {
     if (!confirm("Reset all task progress for this session?")) return;
     await api("/api/session/reset", { method: "POST" });
     location.reload();
@@ -222,8 +224,12 @@ async function boot() {
     `${events.data.notice} (dataset ${events.data.dataset_version})`;
   populateFilters();
   wireViewer();
-  wireReset();
   applyFilters();
+
+  // Viewer-only mode: render just the log dashboard, skip all task/scoring UI.
+  if (meta.data.tasks_enabled === false) return;
+
+  wireReset();
   renderTasks();
   await refreshSession();
 }

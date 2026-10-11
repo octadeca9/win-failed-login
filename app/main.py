@@ -67,6 +67,10 @@ def readyz() -> JSONResponse:
     the ground truth, and which sources the process actually sees at startup.
     Returns booleans and counts only — never any answer content.
     """
+    # Viewer-only mode needs no validator/ground truth at all.
+    if not config.TASKS_ENABLED:
+        return JSONResponse({"ready": True, "mode": "viewer-only", "tasks_enabled": False})
+
     sources_present = {
         "GROUND_TRUTH_B64": bool(config.GROUND_TRUTH_B64),
         "GROUND_TRUTH_YAML": bool(config.GROUND_TRUTH_YAML),
@@ -103,6 +107,7 @@ def index(request: Request) -> HTMLResponse:
             "request": request,
             "challenge": challenge,
             "narrative": " ".join(challenge.get("narrative", "").split()),
+            "tasks_enabled": config.TASKS_ENABLED,
         },
     )
 
@@ -115,10 +120,11 @@ def meta() -> dict:
         "title": challenge["title"],
         "difficulty": challenge["difficulty"],
         "estimated_minutes": challenge["estimated_minutes"],
-        "max_score": challenge["max_score"],
+        "max_score": challenge["max_score"] if config.TASKS_ENABLED else 0,
         "narrative": " ".join(challenge.get("narrative", "").split()),
         "sections": challenge["sections"],
-        "tasks": public_tasks(),
+        "tasks_enabled": config.TASKS_ENABLED,
+        "tasks": public_tasks() if config.TASKS_ENABLED else [],
     }
 
 
@@ -135,13 +141,20 @@ def events() -> dict:
     }
 
 
+def _require_tasks_enabled() -> None:
+    if not config.TASKS_ENABLED:
+        raise HTTPException(status_code=404, detail="tasks are disabled (viewer-only mode)")
+
+
 @app.get("/api/session")
 def session_status(request: Request) -> dict:
+    _require_tasks_enabled()
     return store.status(_session_id(request))
 
 
 @app.post("/api/session/reset")
 def session_reset(request: Request) -> dict:
+    _require_tasks_enabled()
     sid = _session_id(request)
     logger.info('session_reset session=%s', sid)
     return store.reset(sid)
@@ -149,6 +162,7 @@ def session_reset(request: Request) -> dict:
 
 @app.post("/api/tasks/{task_id}/submit")
 def submit(task_id: str, body: SubmitRequest, request: Request) -> dict:
+    _require_tasks_enabled()
     sid = _session_id(request)
 
     public_ids = {t["id"] for t in public_tasks()}

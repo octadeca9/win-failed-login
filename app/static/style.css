@@ -62,6 +62,7 @@ body {
   display: grid; grid-template-columns: 1fr 420px; gap: 16px;
   padding: 16px 20px; align-items: start;
 }
+.layout.viewer-only { grid-template-columns: 1fr; }
 @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } }
 
 .panel {

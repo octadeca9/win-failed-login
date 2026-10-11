@@ -23,6 +23,13 @@ Open <http://127.0.0.1:8080>. The `docker-compose.override.yml` maps the port on
 loopback for local testing only — production access goes through the platform
 gateway, not a published port.
 
+### Modes
+
+| `TASKS_ENABLED` | What you get |
+|---|---|
+| `true` (default) | Full lab: log viewer + task panel + server-side scoring |
+| `false` | **Viewer-only**: just the Windows Security Event Log dashboard — no task panel, no scoring, submission/session endpoints return 404, and no ground truth is required (`GROUND_TRUTH_*` unnecessary). Use when answers/scoring are handled by an external SOC platform. |
+
 ### Run tests
 
 ```bash
