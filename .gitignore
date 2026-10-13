@@ -9,3 +9,6 @@ venv/
 # Internal planning docs — not shipped to the repo
 PRD_Windows_Failed_Login_SOC_RedLimit.md
 Blueprint_Windows_Failed_Login_SOC_RedLimit.md
+
+# Server-side answer key — MUST NOT be committed (inject via GROUND_TRUTH_B64/env in prod)
+config/ground_truth.yaml
